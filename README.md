@@ -13,8 +13,9 @@ Early stage, solo project. What works today:
 | `get_dolar_quote` tool | MEP, CCL, official, blue, wholesale, card and crypto dollar quotes via [dolarapi.com](https://dolarapi.com) (no API key) | yes |
 | Audit log | `@audited` decorator writes one JSON line per tool call (timestamp, args, result or error, duration) | yes |
 | Risk module | Kill switch, per-order cap, position cap (reducing a position is always allowed), data-freshness check | yes |
+| Paper trading | `simulate_order` runs quote, freshness check, risk check and a simulated fill against an in-memory portfolio; rejections are logged too | yes |
 
-Not built yet: BYMA equities/options/bonds tools, and the paper-trading agent that wires the risk module to the tools.
+Not built yet: BYMA equities/options/bonds tools, a persistent portfolio, and a strategy/agent loop on top of these tools.
 
 ## Quick start
 
@@ -34,6 +35,10 @@ Run the server over stdio:
 
 - `ping`: health check.
 - `get_dolar_quote(tipo="mep")`: returns buy/sell and the source timestamp. `tipo` accepts `mep`, `ccl`, `oficial`, `blue`, `mayorista`, `tarjeta`, `cripto`.
+
+- `simulate_order(tipo, side, amount_ars)`: simulated buy/sell of USD against ARS. Buys fill at the ask, sells at the bid, no short positions. Returns `filled` or `rejected` with the reason.
+- `get_paper_portfolio()`: current simulated cash, USD and kill-switch state (in memory, resets on restart).
+- `engage_kill_switch(reason)`: rejects all further orders. There is intentionally no tool to disengage it; restart the server.
 
 ## Audit log
 
