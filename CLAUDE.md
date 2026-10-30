@@ -17,5 +17,7 @@ src/argentina_markets_mcp/: dolar.py (connector), audit.py (@audited),
 risk.py (limits, kill switch), paper.py (simulate_order), server.py (tools).
 
 ## Dev
+```bash
 uv venv --python 3.12 && source .venv/bin/activate
 uv pip install -e ".[dev]" && pytest
+```
