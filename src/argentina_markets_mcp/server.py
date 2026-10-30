@@ -1,5 +1,6 @@
 from mcp.server.mcpserver import MCPServer
 
+from argentina_markets_mcp.audit import audited
 from argentina_markets_mcp.dolar import get_dolar
 
 mcp = MCPServer("argentina-markets")
@@ -12,6 +13,7 @@ def ping() -> str:
 
 
 @mcp.tool()
+@audited
 def get_dolar_quote(tipo: str = "mep") -> dict:
     """Cotización del dólar en Argentina (compra/venta).
 
